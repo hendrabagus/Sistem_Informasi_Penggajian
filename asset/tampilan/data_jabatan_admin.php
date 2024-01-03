@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Kepegawaian</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="side-kiri">
+            <div class="identitas">
+                <div class="logo">
+                    <img src="../../gambar/logo.jpeg">
+                </div>
+            </div>
+            <div class="judul">
+                    Sistem Informasi Kepegawaian
+                </div>
+            <div class="kotak-akses">
+                Admin Toko
+            </div>
+            <div class="side-menu">
+                <img src="../../gambar/dashboard.png">
+                <a href="../beranda_admin.php">Beranda</a>
+            </div>
+            <div class="side-menu">
+                <img src="../../gambar/jabatan.png">
+                <a href="data_jabatan_admin.php">Data Jabatan</a>
+            </div>
+            <div class="side-menu">
+                <img src="../../gambar/pegawai.png">
+                <a href="data_karyawan_admin.php">Data Karyawan</a>
+            </div>
+            <div hidden class="side-menu">
+                <img src="../../gambar/gaji.png">
+                <a href="data_penggajian.php">Penggajian</a>
+            </div>
+            <div class="side-menu">
+                <img src="../../gambar/laporan.png">
+                <a href="laporan_admin.php">Laporan</a>
+            </div>
+        </div>
+        <div class="side-kanan">
+            <div class="kepala">
+            <div class="kepala-garis"><img src="../../gambar/garis.png"></div>
+                <div class="logout"><a href="../../logout.php">Logout</a></div>
+            </div>
+            <div class="judul-halaman">
+                <h1>Data Jabatan</h1>
+            </div>
+            <div class="halaman-data">
+                <div class="tambah">
+                <a href="../input/input_jabatan.php"><button>Tambah Data Jabatan</button></a>
+                </div>
+                <table class="tabel1">
+                    <tr>
+                    <th>No</th>
+                    <th>ID Jabatan</th>
+                    <th>Nama Jabatan</th>
+                    <th>Gaji Pokok</th>
+                    <th colspan="2">Aksi</th>
+                    </tr>
+                    <tr>
+                    <?php 
+                        include '../../koneksi.php';
+                        $no = 1;
+                        $data = mysqli_query($koneksi,"select * from jabatan");
+                        while($row = mysqli_fetch_array($data)){
+                    ?>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $row['id_jabatan']; ?></td>
+                        <td><?php echo $row['nama_jabatan']; ?></td>
+                        <td><?php echo $row['gaji_pokok']; ?></td>
+                        <td>
+                            <div class="aksi_edit">
+                            <a href='../input/edit_jabatan.php?id_jabatan=<?php echo $row['id_jabatan']; ?>'><button>Edit</button></a>
+                            </div>
+                        </td>
+                        <td>
+                        <div class="aksi_hapus">
+                        <a href='delete_jabatan.php?id_jabatan=<?php echo $row['id_jabatan']; ?>' onclick="return confirm('Apakah anda yakin hapus data ini?')"><button>Hapus</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php 
+                    }
+                    ?>
+                   
+                </table>
+            </div>
+            <div class="kaki">
+                Copyright@by CV. Mellavista
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

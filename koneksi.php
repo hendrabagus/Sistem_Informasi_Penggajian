@@ -2,7 +2,7 @@
 $host = "localhost"; 
 $user = "root";
 $password = "";
-$database = "database_penggajian";
+$database = "cv_mellavista";
 
 $koneksi = mysqli_connect($host, $user, $password, $database);
 

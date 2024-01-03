@@ -10,36 +10,35 @@
 <?php
     include "../../koneksi.php";
 
-    $id_penggajian = $_GET['id_penggajian'];
-    $sql = "SELECT penggajian.*, jabatan.nama_jabatan, jabatan.gaji_pokok, karyawan.id_karyawan, karyawan.nama_karyawan, karyawan.status_karyawan, karyawan.no_rek 
-    FROM penggajian
-    JOIN karyawan ON penggajian.id_karyawan = karyawan.id_karyawan
-    JOIN jabatan ON karyawan.id_jabatan = jabatan.id_jabatan WHERE id_penggajian='$id_penggajian'";
+    $id_karyawan = $_GET['id_karyawan'];
+    $sql = "SELECT karyawan.*, jabatan.nama_jabatan FROM karyawan LEFT JOIN jabatan ON karyawan.id_jabatan = jabatan.id_jabatan WHERE id_karyawan='$id_karyawan'";
     $result = mysqli_query($koneksi, $sql);
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $id_penggajian = $row['id_penggajian'];
-        $tgl_penggajian = $row['tgl_penggajian'];
-        $lembur = $row['lembur'];
-        $potongan = $row['potongan'];
-        $total_gaji = $row['total_gaji'];
         $id_karyawan = $row['id_karyawan'];
-        $nama_jabatan = $row['nama_jabatan'];
-        $gaji_pokok = $row['gaji_pokok'];
+        $id_jabatan = $row['id_jabatan'];
         $nama_karyawan = $row['nama_karyawan'];
+        $jk = $row['jk'];
+        $tempat_lahir = $row['tempat_lahir'];
+        $tgl_lahir = $row['tgl_lahir'];
+        $agama = $row['agama'];
+        $alamat = $row['alamat'];
+        $no_telp = $row['no_telp'];
+        $pendidikan = $row['pendidikan'];
+        $tgl_mulai_kerja = $row['tgl_mulai_kerja'];
         $status_karyawan = $row['status_karyawan'];
+        $email = $row['email'];
         $no_rek = $row['no_rek'];
-
-        $totalA = $gaji_pokok + $lembur;
+        $foto = $row['foto'];
+        $nama_jabatan = $row['nama_jabatan'];
     }
 ?>
-
 <body onload="window.print()">
     <table width="650" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td width="10">&nbsp;</td>
-            <td width="140" rowspan="4"><img src="../../gambar/logo.jpg" width="100" height="100" align="center"></td>
+            <td width="140" rowspan="4"><img src="../../gambar/logo.jpeg" width="100" height="100" align="center"></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>

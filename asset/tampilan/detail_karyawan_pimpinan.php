@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Informasi Penggajian</title>
+    <title>Sistem Informasi Kepegawaian</title>
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
     include "../../koneksi.php";
 
     $id_karyawan = $_GET['id_karyawan'];
-    $sql = "SELECT karyawan.*, jabatan.nama_jabatan FROM karyawan LEFT JOIN jabatan ON karyawan.id_jabatan = jabatan.id_jabatan WHERE id_karyawan='$id_karyawan'";
+    $sql = "SELECT karyawan.*, jabatan.nama_jabatan, jabatan.gaji_pokok FROM karyawan LEFT JOIN jabatan ON karyawan.id_jabatan = jabatan.id_jabatan WHERE id_karyawan='$id_karyawan'";
     $result = mysqli_query($koneksi, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -36,6 +36,7 @@
         $no_rek = $row['no_rek'];
         $foto = $row['foto'];
         $nama_jabatan = $row['nama_jabatan'];
+        $gaji_pokok = $row['gaji_pokok'];
     }
 ?>
 
@@ -43,25 +44,29 @@
         <div class="side-kiri">
             <div class="identitas">
                 <div class="logo">
-                    <img src="../../gambar/logo.jpg">
+                    <img src="../../gambar/logo.jpeg">
                 </div>
-                <div class="judul">
-                    Sistem Informasi Penggajian
+                
+            </div>
+            <div class="judul">
+                    Sistem Informasi Kepegawaian
                 </div>
+            <div class="kotak-akses">
+                Kepala Toko
             </div>
             <div class="side-menu">
                 <img src="../../gambar/dashboard.png">
-                <a href="../beranda.php">Beranda</a>
+                <a href="../beranda_pimpinan.php">Beranda</a>
             </div>
             <div class="side-menu">
                 <img src="../../gambar/jabatan.png">
-                <a href="../tampilan/data_jabatan.php">Data Jabatan</a>
+                <a href="../tampilan/data_jabatan_pimpinan.php">Data Jabatan</a>
             </div>
             <div class="side-menu">
                 <img src="../../gambar/pegawai.png">
-                <a href="../tampilan/data_karyawan.php">Data Karyawan</a>
+                <a href="../tampilan/data_karyawan_pimpinan.php">Data Karyawan</a>
             </div>
-            <div class="side-menu">
+            <div hidden class="side-menu">
                 <img src="../../gambar/gaji.png">
                 <a href="../tampilan/data_penggajian.php">Penggajian</a>
             </div>
@@ -76,7 +81,7 @@
                 <div class="logout"><a href="../../logout.php">Logout</a></div>
             </div>
             <div class="judul-halaman">
-                <div class="judul-detail">Detail Data Karyawan</div>
+                <div class="judul-detail"><h1>Detail Data Karyawan</h1></div>
                 <div class="link"><a href="data_karyawan.php">Data Karyawan</a>/Detail Data Karyawan</div>
             </div>
             <div class="kotak-judul-detail">
@@ -147,11 +152,16 @@
                         <div class="identitas-tengah">:</div>
                         <div class="identitas-kanan"><?php echo $no_rek; ?></div>
                     </div>
+                    <div class="kotak-identitas">
+                        <div class="identitas-kiri">Gaji Pokok</div>
+                        <div class="identitas-tengah">:</div>
+                        <div class="identitas-kanan"><?php echo $gaji_pokok; ?></div>
+                    </div>
             </div>
             
         </div>
         <div class="kaki">
-                Copyright@by Hendra Bagus Setiawanto
+                Copyright@by CV. Mellavista
             </div>
     </div>
     

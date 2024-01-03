@@ -27,7 +27,7 @@ move_uploaded_file($tmp, $path);
 // Insert data karyawan ke database
 $sql = "INSERT INTO karyawan (id_karyawan, id_jabatan, nama_karyawan, jk, tempat_lahir, tgl_lahir, agama, alamat, no_telp, pendidikan, tgl_mulai_kerja, status_karyawan, email, no_rek, foto) VALUES ('$id_karyawan', '$id_jabatan','$nama_karyawan', '$jk', '$tempat_lahir','$tgl_lahir','$agama','$alamat','$no_telp','$pendidikan','$tgl_mulai_kerja','$status_karyawan','$email','$no_rek','$foto')";
 if (mysqli_query($koneksi, $sql)) {
-    header("location:../tampilan/data_karyawan.php");
+    header("location:../tampilan/data_karyawan_admin.php");
 } else {
     echo "Terjadi kesalahan: " . mysqli_error($conn);
 }

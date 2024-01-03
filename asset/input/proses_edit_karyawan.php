@@ -34,7 +34,7 @@ if ($foto) {
 }
 
 if (mysqli_query($koneksi, $sql)) {
-    header("location:../tampilan/data_karyawan.php");
+    header("location:../tampilan/data_karyawan_admin.php");
 } else {
     echo "Terjadi kesalahan: " . mysqli_error($conn);
 }

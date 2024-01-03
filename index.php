@@ -4,44 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Sistem Informasi Penggajian</title>
+    <title>Login Sistem Informasi Kepegawaian</title>
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
 
 <?php
-// Mulai session
-session_start();
+// Include file koneksi.php
+include 'koneksi.php';
 
-// Include file koneksi ke database
-include "koneksi.php";
+// Fungsi untuk mengenkripsi password menggunakan MD5
+function encryptPassword($password) {
+    return md5($password);
+}
 
-// Jika tombol login diklik
-if(isset($_POST['login'])){
-  // Ambil data dari form login
-  $username = $_POST['username'];
-  $password = md5($_POST['password']); // password dienkripsi menggunakan md5()
+// Cek apakah form login telah disubmit
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Ambil data dari form login
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-  // Query ke database untuk mencari user dengan username dan password yang cocok
-  $query = "SELECT * FROM pengguna WHERE username='$username' AND password='$password'";
-  $result = mysqli_query($koneksi, $query);
+    // Enkripsi password yang dimasukkan
+    $encryptedPassword = encryptPassword($password);
 
-  // Jika ditemukan user dengan username dan password yang cocok
-  if(mysqli_num_rows($result) > 0){
-    // Ambil data user dari hasil query
-    $data = mysqli_fetch_assoc($result);
+    // Query untuk mencari pengguna dengan username dan password yang sesuai
+    $query = "SELECT * FROM pengguna WHERE username = '$username' AND password = '$encryptedPassword'";
+    $result = mysqli_query($koneksi, $query);
 
-    // Set session untuk user yang sedang login
-    $_SESSION['user_id'] = $data['id'];
-    $_SESSION['username'] = $data['username'];
+    // Cek jumlah baris hasil query
+    $count = mysqli_num_rows($result);
 
-    // Redirect ke halaman utama
-    header("Location: asset/beranda.php");
-    exit;
-  } else {
-    // Jika tidak ditemukan user dengan username dan password yang cocok
-    echo "Username atau password salah!";
-  }
+    if ($count == 1) {
+        // Pengguna ditemukan
+        $row = mysqli_fetch_assoc($result);
+        
+        // Cek level pengguna
+        if ($row['level'] == 'admin') {
+            // Redirect ke halaman admin
+            header('Location:asset/beranda_admin.php');
+        } elseif ($row['level'] == 'pimpinan') {
+            // Redirect ke halaman pimpinan
+            header('Location:asset/beranda_pimpinan.php');
+        }
+    } else {
+        // Username atau password tidak valid
+        echo 'Username atau password salah.';
+    }
 }
 ?>
 
